@@ -1,9 +1,10 @@
-import { Leaf, Home, CalendarDays, User } from "lucide-react";
+import { Leaf, Home, CalendarDays, User, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const tabs = [
   { path: "/assistant", label: "Assistente", icon: Home },
   { path: "/garden", label: "Meu Jardim", icon: Leaf },
+  { path: "/feed", label: "Comunidade", icon: Users },
   { path: "/calendar", label: "Calendário", icon: CalendarDays },
   { path: "/profile", label: "Perfil", icon: User },
 ];

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AppLayout from "./components/AppLayout";
 import Assistant from "./pages/Assistant";
 import MyGarden from "./pages/MyGarden";
+import Feed from "./pages/Feed";
 import Calendar from "./pages/Calendar";
 import Profile from "./pages/Profile";
 import PlantDetail from "./pages/PlantDetail";
@@ -44,6 +45,14 @@ const App = () => (
             element={
               <AppLayout>
                 <PlantDetail />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/feed"
+            element={
+              <AppLayout>
+                <Feed />
               </AppLayout>
             }
           />
