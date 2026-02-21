@@ -3,10 +3,10 @@ export interface Plant {
   name: string;
   species: string;
   image: string;
-  health: number; // 0-100
+  health: number;
   nextAction: string;
-  nextActionType: "water" | "sun" | "prune" | "fertilize" | "harvest";
-  growthProgress: number; // 0-100
+  nextActionType: "water" | "sun" | "prune" | "fertilize" | "harvest" | "repot" | "spray";
+  growthProgress: number;
   addedDate: string;
   location: string;
   tags: string[];
@@ -16,13 +16,45 @@ export interface Task {
   id: string;
   plantId: string;
   plantName: string;
-  type: "water" | "sun" | "prune" | "fertilize" | "harvest" | "repot";
+  type: "water" | "sun" | "prune" | "fertilize" | "harvest" | "repot" | "spray";
   title: string;
   description: string;
   priority: "low" | "medium" | "high" | "critical";
   completed: boolean;
   dueDate: string;
   overdue: boolean;
+}
+
+export interface CareLog {
+  id: string;
+  plantId: string;
+  plantName: string;
+  type: "water" | "sun" | "prune" | "fertilize" | "harvest" | "repot" | "spray";
+  action: string;
+  note: string;
+  date: string;
+  time: string;
+}
+
+export interface FeedPost {
+  id: string;
+  userName: string;
+  userAvatar: string;
+  plantName: string;
+  plantEmoji: string;
+  image: string;
+  caption: string;
+  likes: number;
+  comments: FeedComment[];
+  timeAgo: string;
+  liked: boolean;
+}
+
+export interface FeedComment {
+  id: string;
+  userName: string;
+  text: string;
+  timeAgo: string;
 }
 
 export const MOCK_PLANTS: Plant[] = [
@@ -59,7 +91,7 @@ export const MOCK_PLANTS: Plant[] = [
     image: "🌱",
     health: 70,
     nextAction: "Borrifar folhas",
-    nextActionType: "water",
+    nextActionType: "spray",
     growthProgress: 75,
     addedDate: "2024-01-20",
     location: "Banheiro",
@@ -123,7 +155,7 @@ export const MOCK_TASKS: Task[] = [
     id: "t2",
     plantId: "3",
     plantName: "Samambaia",
-    type: "water",
+    type: "spray",
     title: "Borrifar Samambaia",
     description: "Umidade baixa, borrife as folhas",
     priority: "medium",
@@ -167,6 +199,167 @@ export const MOCK_TASKS: Task[] = [
     dueDate: "2024-12-18",
     overdue: true,
   },
+  {
+    id: "t6",
+    plantId: "1",
+    plantName: "Manjericão",
+    type: "harvest",
+    title: "Colher Manjericão",
+    description: "Folhas maduras prontas para colheita",
+    priority: "low",
+    completed: false,
+    dueDate: "2024-12-21",
+    overdue: false,
+  },
+  {
+    id: "t7",
+    plantId: "6",
+    plantName: "Jibóia",
+    type: "repot",
+    title: "Transplantar Jibóia",
+    description: "Raízes saindo pelo fundo do vaso",
+    priority: "high",
+    completed: false,
+    dueDate: "2024-12-20",
+    overdue: false,
+  },
+  {
+    id: "t8",
+    plantId: "5",
+    plantName: "Alecrim",
+    type: "sun",
+    title: "Mover Alecrim ao sol",
+    description: "Precisa de pelo menos 6h de sol direto",
+    priority: "medium",
+    completed: false,
+    dueDate: "2024-12-20",
+    overdue: false,
+  },
+  {
+    id: "t9",
+    plantId: "3",
+    plantName: "Samambaia",
+    type: "fertilize",
+    title: "Adubar Samambaia",
+    description: "Aplicar adubo foliar quinzenal",
+    priority: "low",
+    completed: false,
+    dueDate: "2024-12-22",
+    overdue: false,
+  },
+  {
+    id: "t10",
+    plantId: "4",
+    plantName: "Orquídea",
+    type: "spray",
+    title: "Borrifar raízes da Orquídea",
+    description: "Manter raízes aéreas hidratadas",
+    priority: "medium",
+    completed: false,
+    dueDate: "2024-12-20",
+    overdue: false,
+  },
+];
+
+export const MOCK_CARE_LOGS: CareLog[] = [
+  { id: "cl1", plantId: "1", plantName: "Manjericão", type: "water", action: "Regou", note: "Solo estava bem seco", date: "2024-12-19", time: "08:30" },
+  { id: "cl2", plantId: "1", plantName: "Manjericão", type: "prune", action: "Podou", note: "Removeu folhas amareladas", date: "2024-12-18", time: "10:15" },
+  { id: "cl3", plantId: "1", plantName: "Manjericão", type: "harvest", action: "Colheu", note: "Colheu folhas para receita de pesto", date: "2024-12-16", time: "17:00" },
+  { id: "cl4", plantId: "1", plantName: "Manjericão", type: "fertilize", action: "Adubou", note: "Adubo NPK diluído 10-10-10", date: "2024-12-14", time: "09:00" },
+  { id: "cl5", plantId: "2", plantName: "Suculenta Jade", type: "water", action: "Regou", note: "Rega leve, solo drenante", date: "2024-12-15", time: "07:45" },
+  { id: "cl6", plantId: "2", plantName: "Suculenta Jade", type: "sun", action: "Moveu ao sol", note: "Colocou na janela por 4h", date: "2024-12-13", time: "08:00" },
+  { id: "cl7", plantId: "3", plantName: "Samambaia", type: "spray", action: "Borrifou", note: "Borrifou folhas e substrato", date: "2024-12-19", time: "07:00" },
+  { id: "cl8", plantId: "3", plantName: "Samambaia", type: "water", action: "Regou", note: "Rega profunda", date: "2024-12-17", time: "08:20" },
+  { id: "cl9", plantId: "4", plantName: "Orquídea", type: "water", action: "Regou", note: "Imersão por 15 min", date: "2024-12-16", time: "09:30" },
+  { id: "cl10", plantId: "4", plantName: "Orquídea", type: "spray", action: "Borrifou", note: "Borrifou raízes aéreas", date: "2024-12-18", time: "10:00" },
+  { id: "cl11", plantId: "5", plantName: "Alecrim", type: "prune", action: "Podou", note: "Poda de formação", date: "2024-12-19", time: "11:00" },
+  { id: "cl12", plantId: "5", plantName: "Alecrim", type: "harvest", action: "Colheu", note: "Ramos para tempero", date: "2024-12-17", time: "18:00" },
+  { id: "cl13", plantId: "5", plantName: "Alecrim", type: "sun", action: "Moveu ao sol", note: "Voltou para varanda ensolarada", date: "2024-12-15", time: "07:30" },
+  { id: "cl14", plantId: "6", plantName: "Jibóia", type: "water", action: "Regou", note: "Solo úmido, rega leve", date: "2024-12-18", time: "08:00" },
+  { id: "cl15", plantId: "6", plantName: "Jibóia", type: "prune", action: "Podou", note: "Cortou ramo para propagar", date: "2024-12-12", time: "14:00" },
+];
+
+export const MOCK_FEED_POSTS: FeedPost[] = [
+  {
+    id: "f1",
+    userName: "Ana Paula",
+    userAvatar: "👩‍🌾",
+    plantName: "Monstera Deliciosa",
+    plantEmoji: "🌿",
+    image: "🪴",
+    caption: "Minha monstera deu uma folha nova fenestrada! 3 meses de espera valeram a pena 🥹💚",
+    likes: 24,
+    comments: [
+      { id: "c1", userName: "Carlos", text: "Linda demais! Qual adubo você usa?", timeAgo: "2h" },
+      { id: "c2", userName: "Maria", text: "Parabéns! A minha ainda tá na luta 😅", timeAgo: "1h" },
+    ],
+    timeAgo: "3h",
+    liked: false,
+  },
+  {
+    id: "f2",
+    userName: "Pedro Santos",
+    userAvatar: "🧑‍🌾",
+    plantName: "Tomate Cereja",
+    plantEmoji: "🍅",
+    image: "🌱",
+    caption: "Primeira colheita do meu tomate cereja na varanda! Orgulho de planteiro de apartamento 🏙️🍅",
+    likes: 42,
+    comments: [
+      { id: "c3", userName: "Julia", text: "Que incrível! Dá pra plantar em vaso mesmo?", timeAgo: "5h" },
+      { id: "c4", userName: "Ana Paula", text: "Maravilhoso! Quanto tempo levou?", timeAgo: "4h" },
+      { id: "c5", userName: "Lucas", text: "Inspirador! Vou tentar também", timeAgo: "3h" },
+    ],
+    timeAgo: "6h",
+    liked: true,
+  },
+  {
+    id: "f3",
+    userName: "Camila Rocha",
+    userAvatar: "👩",
+    plantName: "Orquídea Phalaenopsis",
+    plantEmoji: "🌸",
+    image: "🌺",
+    caption: "Minha orquídea refloresce depois de 8 meses! Segredo: paciência e luz indireta ✨🌸",
+    likes: 67,
+    comments: [
+      { id: "c6", userName: "Fernanda", text: "Conta mais! A minha nunca refloresceu 😭", timeAgo: "1h" },
+    ],
+    timeAgo: "8h",
+    liked: false,
+  },
+  {
+    id: "f4",
+    userName: "Lucas Mendes",
+    userAvatar: "🧔",
+    plantName: "Samambaia",
+    plantEmoji: "🌱",
+    image: "☘️",
+    caption: "Setup novo: samambaia pendurada no banheiro. Ela ama a umidade! 🚿🌿",
+    likes: 31,
+    comments: [
+      { id: "c7", userName: "Camila Rocha", text: "Adorei a ideia! Vou copiar 😍", timeAgo: "30min" },
+      { id: "c8", userName: "Pedro Santos", text: "Genial! Qual suporte você usou?", timeAgo: "20min" },
+    ],
+    timeAgo: "12h",
+    liked: false,
+  },
+  {
+    id: "f5",
+    userName: "Fernanda Lima",
+    userAvatar: "👩‍🦰",
+    plantName: "Suculentas",
+    plantEmoji: "🪴",
+    image: "🌵",
+    caption: "Minha coleção de suculentas já tem 15! Cada uma com personalidade diferente 💚🪴",
+    likes: 55,
+    comments: [
+      { id: "c9", userName: "Ana Paula", text: "Qual sua favorita? 😍", timeAgo: "2h" },
+      { id: "c10", userName: "Lucas Mendes", text: "Impressionante! Quanto tempo pra juntar tudo?", timeAgo: "1h" },
+    ],
+    timeAgo: "1d",
+    liked: true,
+  },
 ];
 
 export const TASK_ICONS: Record<string, string> = {
@@ -176,6 +369,17 @@ export const TASK_ICONS: Record<string, string> = {
   fertilize: "🧪",
   harvest: "🌾",
   repot: "🪴",
+  spray: "💦",
+};
+
+export const TASK_LABELS: Record<string, string> = {
+  water: "Regar",
+  sun: "Luz solar",
+  prune: "Podar",
+  fertilize: "Adubar",
+  harvest: "Colher",
+  repot: "Transplantar",
+  spray: "Borrifar",
 };
 
 export const CATALOG_PLANTS = [
