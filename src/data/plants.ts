@@ -44,10 +44,10 @@ export interface FeedPost {
   plantEmoji: string;
   image: string;
   caption: string;
-  likes: number;
+  cultivares: number;
   comments: FeedComment[];
   timeAgo: string;
-  liked: boolean;
+  cultivado: boolean;
 }
 
 export interface FeedComment {
@@ -288,13 +288,13 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
     plantEmoji: "🌿",
     image: "🪴",
     caption: "Minha monstera deu uma folha nova fenestrada! 3 meses de espera valeram a pena 🥹💚",
-    likes: 24,
+    cultivares: 24,
     comments: [
       { id: "c1", userName: "Carlos", text: "Linda demais! Qual adubo você usa?", timeAgo: "2h" },
       { id: "c2", userName: "Maria", text: "Parabéns! A minha ainda tá na luta 😅", timeAgo: "1h" },
     ],
     timeAgo: "3h",
-    liked: false,
+    cultivado: false,
   },
   {
     id: "f2",
@@ -304,14 +304,14 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
     plantEmoji: "🍅",
     image: "🌱",
     caption: "Primeira colheita do meu tomate cereja na varanda! Orgulho de planteiro de apartamento 🏙️🍅",
-    likes: 42,
+    cultivares: 42,
     comments: [
       { id: "c3", userName: "Julia", text: "Que incrível! Dá pra plantar em vaso mesmo?", timeAgo: "5h" },
       { id: "c4", userName: "Ana Paula", text: "Maravilhoso! Quanto tempo levou?", timeAgo: "4h" },
       { id: "c5", userName: "Lucas", text: "Inspirador! Vou tentar também", timeAgo: "3h" },
     ],
     timeAgo: "6h",
-    liked: true,
+    cultivado: true,
   },
   {
     id: "f3",
@@ -321,12 +321,12 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
     plantEmoji: "🌸",
     image: "🌺",
     caption: "Minha orquídea refloresce depois de 8 meses! Segredo: paciência e luz indireta ✨🌸",
-    likes: 67,
+    cultivares: 67,
     comments: [
       { id: "c6", userName: "Fernanda", text: "Conta mais! A minha nunca refloresceu 😭", timeAgo: "1h" },
     ],
     timeAgo: "8h",
-    liked: false,
+    cultivado: false,
   },
   {
     id: "f4",
@@ -336,13 +336,13 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
     plantEmoji: "🌱",
     image: "☘️",
     caption: "Setup novo: samambaia pendurada no banheiro. Ela ama a umidade! 🚿🌿",
-    likes: 31,
+    cultivares: 31,
     comments: [
       { id: "c7", userName: "Camila Rocha", text: "Adorei a ideia! Vou copiar 😍", timeAgo: "30min" },
       { id: "c8", userName: "Pedro Santos", text: "Genial! Qual suporte você usou?", timeAgo: "20min" },
     ],
     timeAgo: "12h",
-    liked: false,
+    cultivado: false,
   },
   {
     id: "f5",
@@ -352,13 +352,13 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
     plantEmoji: "🪴",
     image: "🌵",
     caption: "Minha coleção de suculentas já tem 15! Cada uma com personalidade diferente 💚🪴",
-    likes: 55,
+    cultivares: 55,
     comments: [
       { id: "c9", userName: "Ana Paula", text: "Qual sua favorita? 😍", timeAgo: "2h" },
       { id: "c10", userName: "Lucas Mendes", text: "Impressionante! Quanto tempo pra juntar tudo?", timeAgo: "1h" },
     ],
     timeAgo: "1d",
-    liked: true,
+    cultivado: true,
   },
 ];
 
