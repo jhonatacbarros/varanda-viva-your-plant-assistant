@@ -1,20 +1,27 @@
 import { useState } from "react";
-import { Heart, MessageCircle, Send, Plus, Bookmark } from "lucide-react";
+import { Sprout, MessageCircle, Send, Plus, Bookmark } from "lucide-react";
 import { MOCK_FEED_POSTS, FeedPost } from "@/data/plants";
 import { useNavigate } from "react-router-dom";
+import { useGamification } from "@/hooks/useGamification";
 
 const Feed = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<FeedPost[]>(MOCK_FEED_POSTS);
   const [expandedComments, setExpandedComments] = useState<string | null>(null);
+  const { addCultivar, removeCultivar } = useGamification();
 
-  const handleLike = (postId: string) => {
+  const handleCultivar = (postId: string) => {
     setPosts((prev) =>
-      prev.map((p) =>
-        p.id === postId
-          ? { ...p, liked: !p.liked, likes: p.liked ? p.likes - 1 : p.likes + 1 }
-          : p
-      )
+      prev.map((p) => {
+        if (p.id !== postId) return p;
+        if (p.cultivado) {
+          removeCultivar();
+          return { ...p, cultivado: false, cultivares: p.cultivares - 1 };
+        } else {
+          addCultivar();
+          return { ...p, cultivado: true, cultivares: p.cultivares + 1 };
+        }
+      })
     );
   };
 
@@ -74,17 +81,17 @@ const Feed = () => {
             {/* Actions */}
             <div className="flex items-center gap-4 px-4 py-3">
               <button
-                onClick={() => handleLike(post.id)}
+                onClick={() => handleCultivar(post.id)}
                 className="flex items-center gap-1.5 transition-all duration-200"
               >
-                <Heart
+                <Sprout
                   size={20}
                   className={`transition-all duration-200 ${
-                    post.liked ? "fill-destructive text-destructive scale-110" : "text-foreground"
+                    post.cultivado ? "fill-primary text-primary scale-110" : "text-foreground"
                   }`}
                 />
-                <span className={`text-xs font-bold ${post.liked ? "text-destructive" : "text-foreground"}`}>
-                  {post.likes}
+                <span className={`text-xs font-bold ${post.cultivado ? "text-primary" : "text-foreground"}`}>
+                  {post.cultivares}
                 </span>
               </button>
               <button
@@ -114,7 +121,6 @@ const Feed = () => {
                     </span>
                   </div>
                 ))}
-                {/* Comment input */}
                 <div className="flex items-center gap-2 mt-2">
                   <input
                     type="text"
