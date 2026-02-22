@@ -1,16 +1,31 @@
-import { Cloud, CloudOff, Leaf, Target, Flame, ChevronRight, Moon, Sun } from "lucide-react";
-import { MOCK_PLANTS } from "@/data/plants";
+import { useState } from "react";
+import { Flame, Target, Leaf, Settings, Heart, Bookmark, Grid3X3, ChevronRight } from "lucide-react";
+import { MOCK_PLANTS, MOCK_FEED_POSTS } from "@/data/plants";
+import { useNavigate } from "react-router-dom";
+
+type Tab = "posts" | "saved";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const [tab, setTab] = useState<Tab>("posts");
   const streak = 12;
   const completionRate = 87;
   const totalPlants = MOCK_PLANTS.length;
 
+  const userPosts = MOCK_FEED_POSTS.slice(0, 3);
+  const savedPosts = MOCK_FEED_POSTS.filter((p) => p.liked);
+
   return (
-    <div className="px-4 pt-6">
+    <div className="px-4 pt-6 pb-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 animate-fade-in">
         <h1 className="text-2xl font-extrabold text-foreground">Perfil</h1>
+        <button
+          onClick={() => navigate("/settings")}
+          className="w-10 h-10 rounded-xl bg-card flex items-center justify-center card-shadow"
+        >
+          <Settings size={20} className="text-foreground" />
+        </button>
       </div>
 
       {/* Avatar */}
@@ -18,13 +33,18 @@ const Profile = () => {
         <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center">
           <span className="text-3xl">🧑‍🌾</span>
         </div>
-        <div>
+        <div className="flex-1">
           <h2 className="text-lg font-extrabold text-foreground">Jardineiro(a)</h2>
-          <div className="flex items-center gap-1.5 mt-1">
-            <CloudOff size={14} className="text-muted-foreground" />
-            <span className="text-xs font-semibold text-muted-foreground">Modo offline</span>
-          </div>
+          <p className="text-xs text-muted-foreground font-semibold">
+            {totalPlants} plantas · {userPosts.length} posts
+          </p>
         </div>
+        <button
+          onClick={() => navigate("/login")}
+          className="px-3 py-2 bg-primary rounded-xl text-xs font-bold text-primary-foreground"
+        >
+          Login
+        </button>
       </div>
 
       {/* Stats */}
@@ -46,16 +66,14 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Weekly chart simplified */}
+      {/* Weekly chart */}
       <div className="bg-card rounded-2xl p-4 card-shadow mb-6 animate-slide-up opacity-0 stagger-5">
         <h3 className="text-sm font-extrabold text-foreground mb-3">Esta semana</h3>
         <div className="flex items-end justify-between gap-2 h-20">
           {[4, 3, 5, 2, 4, 3, 1].map((val, i) => (
             <div key={i} className="flex-1 flex flex-col items-center gap-1">
               <div
-                className={`w-full rounded-lg transition-all ${
-                  i === 3 ? "bg-warning" : "bg-primary"
-                }`}
+                className={`w-full rounded-lg transition-all ${i === 3 ? "bg-warning" : "bg-primary"}`}
                 style={{ height: `${val * 16}px` }}
               />
               <span className="text-[9px] font-bold text-muted-foreground">
@@ -66,22 +84,49 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="space-y-2 animate-slide-up opacity-0 stagger-5">
-        <button className="w-full bg-card rounded-xl p-4 card-shadow flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Cloud size={20} className="text-primary" />
-            <span className="text-sm font-bold text-foreground">Login e Sincronização</span>
-          </div>
-          <ChevronRight size={16} className="text-muted-foreground" />
+      {/* Tabs */}
+      <div className="flex bg-card rounded-2xl card-shadow mb-4 p-1 animate-slide-up opacity-0 stagger-5">
+        <button
+          onClick={() => setTab("posts")}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all ${
+            tab === "posts" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+          }`}
+        >
+          <Grid3X3 size={14} />
+          Meus Posts
         </button>
-        <button className="w-full bg-card rounded-xl p-4 card-shadow flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Moon size={20} className="text-foreground" />
-            <span className="text-sm font-bold text-foreground">Modo Escuro</span>
-          </div>
-          <ChevronRight size={16} className="text-muted-foreground" />
+        <button
+          onClick={() => setTab("saved")}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold transition-all ${
+            tab === "saved" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+          }`}
+        >
+          <Bookmark size={14} />
+          Salvos
         </button>
+      </div>
+
+      {/* Posts grid */}
+      <div className="grid grid-cols-3 gap-2">
+        {(tab === "posts" ? userPosts : savedPosts).map((post) => (
+          <div
+            key={post.id}
+            className="bg-card rounded-xl card-shadow aspect-square flex flex-col items-center justify-center relative"
+          >
+            <span className="text-4xl">{post.image}</span>
+            <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1">
+              <Heart size={10} className="text-destructive" />
+              <span className="text-[9px] font-bold text-muted-foreground">{post.likes}</span>
+            </div>
+          </div>
+        ))}
+        {(tab === "posts" ? userPosts : savedPosts).length === 0 && (
+          <div className="col-span-3 py-12 text-center">
+            <p className="text-sm text-muted-foreground font-semibold">
+              {tab === "posts" ? "Nenhum post ainda" : "Nenhum post salvo"}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
