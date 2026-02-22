@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Heart, MessageCircle, Send, Plus, Bookmark } from "lucide-react";
 import { MOCK_FEED_POSTS, FeedPost } from "@/data/plants";
+import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<FeedPost[]>(MOCK_FEED_POSTS);
   const [expandedComments, setExpandedComments] = useState<string | null>(null);
 
@@ -28,7 +30,7 @@ const Feed = () => {
           <h1 className="text-2xl font-extrabold text-foreground">Comunidade</h1>
           <p className="text-xs font-semibold text-muted-foreground">Compartilhe suas conquistas 🌱</p>
         </div>
-        <button className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+        <button onClick={() => navigate("/feed/create")} className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
           <Plus size={20} className="text-primary-foreground" />
         </button>
       </div>

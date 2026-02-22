@@ -25,7 +25,7 @@ const MyGarden = () => {
           >
             {viewMode === "grid" ? <List size={18} className="text-foreground" /> : <LayoutGrid size={18} className="text-foreground" />}
           </button>
-          <button className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
+          <button onClick={() => navigate("/garden/add")} className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
             <Plus size={18} className="text-primary-foreground" />
           </button>
         </div>
