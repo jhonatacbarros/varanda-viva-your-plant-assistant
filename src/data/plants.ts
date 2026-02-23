@@ -1,3 +1,13 @@
+export interface PlantCareInfo {
+  waterFrequency: string; // e.g. "A cada 2 dias"
+  sunlight: "sol pleno" | "meia-sombra" | "sombra" | "luz indireta";
+  humidity: "baixa" | "média" | "alta";
+  temperature: string; // e.g. "18-28°C"
+  difficulty: "fácil" | "moderada" | "difícil";
+  soilType: string;
+  toxicity: string;
+}
+
 export interface Plant {
   id: string;
   name: string;
@@ -10,6 +20,12 @@ export interface Plant {
   addedDate: string;
   location: string;
   tags: string[];
+  description: string;
+  careInfo: PlantCareInfo;
+  lastWatered: string;
+  lastFertilized: string;
+  nextWatering: string;
+  nextFertilizing: string;
 }
 
 export interface Task {
@@ -70,6 +86,12 @@ export const MOCK_PLANTS: Plant[] = [
     addedDate: "2024-01-15",
     location: "Varanda",
     tags: ["fácil", "sol da manhã", "aromática"],
+    description: "Erva aromática muito usada na culinária. Prefere sol direto pela manhã e solo úmido mas não encharcado.",
+    careInfo: { waterFrequency: "A cada 2 dias", sunlight: "meia-sombra", humidity: "média", temperature: "18-30°C", difficulty: "fácil", soilType: "Rico em matéria orgânica, bem drenado", toxicity: "Não tóxica" },
+    lastWatered: "2024-12-19",
+    lastFertilized: "2024-12-14",
+    nextWatering: "2024-12-21",
+    nextFertilizing: "2024-12-28",
   },
   {
     id: "2",
@@ -83,6 +105,12 @@ export const MOCK_PLANTS: Plant[] = [
     addedDate: "2024-02-01",
     location: "Sala",
     tags: ["fácil", "pouca água", "iniciante"],
+    description: "Suculenta resistente que armazena água nas folhas. Ideal para iniciantes, precisa de pouca manutenção.",
+    careInfo: { waterFrequency: "A cada 10-14 dias", sunlight: "luz indireta", humidity: "baixa", temperature: "15-28°C", difficulty: "fácil", soilType: "Substrato para suculentas, muito drenante", toxicity: "Levemente tóxica para pets" },
+    lastWatered: "2024-12-15",
+    lastFertilized: "2024-12-01",
+    nextWatering: "2024-12-25",
+    nextFertilizing: "2025-01-01",
   },
   {
     id: "3",
@@ -96,6 +124,12 @@ export const MOCK_PLANTS: Plant[] = [
     addedDate: "2024-01-20",
     location: "Banheiro",
     tags: ["moderada", "sombra", "umidade"],
+    description: "Planta tropical que adora umidade alta. Perfeita para banheiros. Borrifar as folhas regularmente.",
+    careInfo: { waterFrequency: "A cada 2-3 dias", sunlight: "sombra", humidity: "alta", temperature: "18-25°C", difficulty: "moderada", soilType: "Rico em húmus, mantém umidade", toxicity: "Não tóxica" },
+    lastWatered: "2024-12-17",
+    lastFertilized: "2024-12-10",
+    nextWatering: "2024-12-20",
+    nextFertilizing: "2024-12-24",
   },
   {
     id: "4",
@@ -109,6 +143,12 @@ export const MOCK_PLANTS: Plant[] = [
     addedDate: "2024-03-10",
     location: "Quarto",
     tags: ["moderada", "luz indireta"],
+    description: "Orquídea elegante que floresce por meses. Regar por imersão e evitar acúmulo de água nas folhas.",
+    careInfo: { waterFrequency: "A cada 5-7 dias (imersão)", sunlight: "luz indireta", humidity: "média", temperature: "18-28°C", difficulty: "moderada", soilType: "Casca de pinus, musgo sphagnum", toxicity: "Não tóxica" },
+    lastWatered: "2024-12-16",
+    lastFertilized: "2024-12-01",
+    nextWatering: "2024-12-22",
+    nextFertilizing: "2024-12-20",
   },
   {
     id: "5",
@@ -122,6 +162,12 @@ export const MOCK_PLANTS: Plant[] = [
     addedDate: "2024-01-05",
     location: "Varanda",
     tags: ["fácil", "sol pleno", "aromática"],
+    description: "Erva mediterrânea resistente que adora sol pleno. Excelente para culinária e tem aroma inconfundível.",
+    careInfo: { waterFrequency: "A cada 3-5 dias", sunlight: "sol pleno", humidity: "baixa", temperature: "15-35°C", difficulty: "fácil", soilType: "Arenoso, bem drenado, pH alcalino", toxicity: "Não tóxica" },
+    lastWatered: "2024-12-18",
+    lastFertilized: "2024-12-10",
+    nextWatering: "2024-12-22",
+    nextFertilizing: "2024-12-25",
   },
   {
     id: "6",
@@ -135,6 +181,12 @@ export const MOCK_PLANTS: Plant[] = [
     addedDate: "2024-02-20",
     location: "Sala",
     tags: ["fácil", "pouca luz", "iniciante"],
+    description: "Trepadeira versátil que purifica o ar. Cresce em quase qualquer condição de luz, perfeita para interiores.",
+    careInfo: { waterFrequency: "A cada 5-7 dias", sunlight: "luz indireta", humidity: "média", temperature: "18-30°C", difficulty: "fácil", soilType: "Universal, bem drenado", toxicity: "Tóxica para pets e crianças" },
+    lastWatered: "2024-12-18",
+    lastFertilized: "2024-12-05",
+    nextWatering: "2024-12-23",
+    nextFertilizing: "2024-12-19",
   },
 ];
 
