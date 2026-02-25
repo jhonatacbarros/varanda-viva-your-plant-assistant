@@ -1,11 +1,28 @@
+export interface ToxicityInfo {
+  dogs: boolean;
+  cats: boolean;
+  birds: boolean;
+  children: boolean;
+  symptoms: string;
+  severity: "não tóxica" | "levemente tóxica" | "moderadamente tóxica" | "altamente tóxica";
+}
+
 export interface PlantCareInfo {
-  waterFrequency: string; // e.g. "A cada 2 dias"
+  waterFrequency: string;
+  waterAmount: string; // e.g. "200ml"
   sunlight: "sol pleno" | "meia-sombra" | "sombra" | "luz indireta";
+  sunHoursPerDay: string; // e.g. "4-6h"
   humidity: "baixa" | "média" | "alta";
-  temperature: string; // e.g. "18-28°C"
+  temperature: string;
+  idealSeason: string; // e.g. "Primavera e Verão"
+  climate: string; // e.g. "Tropical", "Temperado"
   difficulty: "fácil" | "moderada" | "difícil";
   soilType: string;
-  toxicity: string;
+  fertilizerType: string; // e.g. "NPK 10-10-10"
+  fertilizerFrequency: string;
+  pruningTips: string;
+  propagation: string; // e.g. "Estacas", "Sementes"
+  toxicity: ToxicityInfo;
 }
 
 export interface Plant {
@@ -13,12 +30,15 @@ export interface Plant {
   name: string;
   species: string;
   image: string;
+  photo?: string; // user uploaded photo URL
   health: number;
   nextAction: string;
   nextActionType: "water" | "sun" | "prune" | "fertilize" | "harvest" | "repot" | "spray";
   growthProgress: number;
   addedDate: string;
   location: string;
+  origin: string; // e.g. "Mediterrâneo"
+  companionPlants: string[]; // plants that grow well together
   tags: string[];
   description: string;
   careInfo: PlantCareInfo;
@@ -85,13 +105,20 @@ export const MOCK_PLANTS: Plant[] = [
     growthProgress: 60,
     addedDate: "2024-01-15",
     location: "Varanda",
+    origin: "Índia e Ásia tropical",
+    companionPlants: ["Tomate", "Pimentão", "Alecrim"],
     tags: ["fácil", "sol da manhã", "aromática"],
     description: "Erva aromática muito usada na culinária. Prefere sol direto pela manhã e solo úmido mas não encharcado.",
-    careInfo: { waterFrequency: "A cada 2 dias", sunlight: "meia-sombra", humidity: "média", temperature: "18-30°C", difficulty: "fácil", soilType: "Rico em matéria orgânica, bem drenado", toxicity: "Não tóxica" },
-    lastWatered: "2024-12-19",
-    lastFertilized: "2024-12-14",
-    nextWatering: "2024-12-21",
-    nextFertilizing: "2024-12-28",
+    careInfo: {
+      waterFrequency: "A cada 2 dias", waterAmount: "150-200ml", sunlight: "meia-sombra", sunHoursPerDay: "4-6h",
+      humidity: "média", temperature: "18-30°C", idealSeason: "Primavera e Verão", climate: "Tropical e Subtropical",
+      difficulty: "fácil", soilType: "Rico em matéria orgânica, bem drenado",
+      fertilizerType: "NPK 10-10-10 diluído", fertilizerFrequency: "A cada 15 dias",
+      pruningTips: "Corte acima do segundo par de folhas para estimular ramificação",
+      propagation: "Sementes ou estacas em água",
+      toxicity: { dogs: false, cats: false, birds: false, children: false, symptoms: "Nenhum", severity: "não tóxica" },
+    },
+    lastWatered: "2024-12-19", lastFertilized: "2024-12-14", nextWatering: "2024-12-21", nextFertilizing: "2024-12-28",
   },
   {
     id: "2",
@@ -104,13 +131,20 @@ export const MOCK_PLANTS: Plant[] = [
     growthProgress: 40,
     addedDate: "2024-02-01",
     location: "Sala",
+    origin: "África do Sul",
+    companionPlants: ["Echeveria", "Aloe vera", "Sedum"],
     tags: ["fácil", "pouca água", "iniciante"],
     description: "Suculenta resistente que armazena água nas folhas. Ideal para iniciantes, precisa de pouca manutenção.",
-    careInfo: { waterFrequency: "A cada 10-14 dias", sunlight: "luz indireta", humidity: "baixa", temperature: "15-28°C", difficulty: "fácil", soilType: "Substrato para suculentas, muito drenante", toxicity: "Levemente tóxica para pets" },
-    lastWatered: "2024-12-15",
-    lastFertilized: "2024-12-01",
-    nextWatering: "2024-12-25",
-    nextFertilizing: "2025-01-01",
+    careInfo: {
+      waterFrequency: "A cada 10-14 dias", waterAmount: "50-100ml", sunlight: "luz indireta", sunHoursPerDay: "3-4h",
+      humidity: "baixa", temperature: "15-28°C", idealSeason: "Primavera", climate: "Árido e Semiárido",
+      difficulty: "fácil", soilType: "Substrato para suculentas, muito drenante",
+      fertilizerType: "Fertilizante para suculentas", fertilizerFrequency: "A cada 2 meses",
+      pruningTips: "Remover folhas secas na base. Poda mínima necessária.",
+      propagation: "Folhas ou estacas de caule",
+      toxicity: { dogs: true, cats: true, birds: false, children: true, symptoms: "Vômito e diarreia leve se ingerida", severity: "levemente tóxica" },
+    },
+    lastWatered: "2024-12-15", lastFertilized: "2024-12-01", nextWatering: "2024-12-25", nextFertilizing: "2025-01-01",
   },
   {
     id: "3",
@@ -123,13 +157,20 @@ export const MOCK_PLANTS: Plant[] = [
     growthProgress: 75,
     addedDate: "2024-01-20",
     location: "Banheiro",
+    origin: "Américas tropicais",
+    companionPlants: ["Lírio da paz", "Antúrio", "Filodendro"],
     tags: ["moderada", "sombra", "umidade"],
     description: "Planta tropical que adora umidade alta. Perfeita para banheiros. Borrifar as folhas regularmente.",
-    careInfo: { waterFrequency: "A cada 2-3 dias", sunlight: "sombra", humidity: "alta", temperature: "18-25°C", difficulty: "moderada", soilType: "Rico em húmus, mantém umidade", toxicity: "Não tóxica" },
-    lastWatered: "2024-12-17",
-    lastFertilized: "2024-12-10",
-    nextWatering: "2024-12-20",
-    nextFertilizing: "2024-12-24",
+    careInfo: {
+      waterFrequency: "A cada 2-3 dias", waterAmount: "200-300ml", sunlight: "sombra", sunHoursPerDay: "1-2h indireta",
+      humidity: "alta", temperature: "18-25°C", idealSeason: "O ano todo (tropical)", climate: "Tropical úmido",
+      difficulty: "moderada", soilType: "Rico em húmus, mantém umidade",
+      fertilizerType: "Adubo foliar líquido", fertilizerFrequency: "Quinzenal na primavera/verão",
+      pruningTips: "Remover folhas amareladas e secas rente à base",
+      propagation: "Divisão de touceira ou esporos",
+      toxicity: { dogs: false, cats: false, birds: false, children: false, symptoms: "Nenhum", severity: "não tóxica" },
+    },
+    lastWatered: "2024-12-17", lastFertilized: "2024-12-10", nextWatering: "2024-12-20", nextFertilizing: "2024-12-24",
   },
   {
     id: "4",
@@ -142,13 +183,20 @@ export const MOCK_PLANTS: Plant[] = [
     growthProgress: 30,
     addedDate: "2024-03-10",
     location: "Quarto",
+    origin: "Sudeste Asiático",
+    companionPlants: ["Bromélia", "Samambaia", "Musgo"],
     tags: ["moderada", "luz indireta"],
     description: "Orquídea elegante que floresce por meses. Regar por imersão e evitar acúmulo de água nas folhas.",
-    careInfo: { waterFrequency: "A cada 5-7 dias (imersão)", sunlight: "luz indireta", humidity: "média", temperature: "18-28°C", difficulty: "moderada", soilType: "Casca de pinus, musgo sphagnum", toxicity: "Não tóxica" },
-    lastWatered: "2024-12-16",
-    lastFertilized: "2024-12-01",
-    nextWatering: "2024-12-22",
-    nextFertilizing: "2024-12-20",
+    careInfo: {
+      waterFrequency: "A cada 5-7 dias (imersão)", waterAmount: "Imersão por 15min", sunlight: "luz indireta", sunHoursPerDay: "4-6h indireta",
+      humidity: "média", temperature: "18-28°C", idealSeason: "Floresce no inverno/primavera", climate: "Tropical",
+      difficulty: "moderada", soilType: "Casca de pinus, musgo sphagnum",
+      fertilizerType: "Adubo para orquídeas (NPK 20-20-20)", fertilizerFrequency: "Quinzenal durante crescimento",
+      pruningTips: "Cortar haste floral seca acima do 3º nó. Nunca cortar raízes verdes.",
+      propagation: "Keikis (brotos laterais) ou divisão",
+      toxicity: { dogs: false, cats: false, birds: false, children: false, symptoms: "Nenhum", severity: "não tóxica" },
+    },
+    lastWatered: "2024-12-16", lastFertilized: "2024-12-01", nextWatering: "2024-12-22", nextFertilizing: "2024-12-20",
   },
   {
     id: "5",
@@ -161,13 +209,20 @@ export const MOCK_PLANTS: Plant[] = [
     growthProgress: 80,
     addedDate: "2024-01-05",
     location: "Varanda",
+    origin: "Região Mediterrânea",
+    companionPlants: ["Manjericão", "Lavanda", "Sálvia"],
     tags: ["fácil", "sol pleno", "aromática"],
     description: "Erva mediterrânea resistente que adora sol pleno. Excelente para culinária e tem aroma inconfundível.",
-    careInfo: { waterFrequency: "A cada 3-5 dias", sunlight: "sol pleno", humidity: "baixa", temperature: "15-35°C", difficulty: "fácil", soilType: "Arenoso, bem drenado, pH alcalino", toxicity: "Não tóxica" },
-    lastWatered: "2024-12-18",
-    lastFertilized: "2024-12-10",
-    nextWatering: "2024-12-22",
-    nextFertilizing: "2024-12-25",
+    careInfo: {
+      waterFrequency: "A cada 3-5 dias", waterAmount: "100-150ml", sunlight: "sol pleno", sunHoursPerDay: "6-8h",
+      humidity: "baixa", temperature: "15-35°C", idealSeason: "Primavera e Verão", climate: "Mediterrâneo e Temperado",
+      difficulty: "fácil", soilType: "Arenoso, bem drenado, pH alcalino",
+      fertilizerType: "Adubo orgânico ou NPK 4-14-8", fertilizerFrequency: "Mensal",
+      pruningTips: "Podar após floração. Nunca cortar madeira velha sem folhas.",
+      propagation: "Estacas semi-lenhosas na primavera",
+      toxicity: { dogs: false, cats: false, birds: false, children: false, symptoms: "Nenhum", severity: "não tóxica" },
+    },
+    lastWatered: "2024-12-18", lastFertilized: "2024-12-10", nextWatering: "2024-12-22", nextFertilizing: "2024-12-25",
   },
   {
     id: "6",
@@ -180,13 +235,20 @@ export const MOCK_PLANTS: Plant[] = [
     growthProgress: 55,
     addedDate: "2024-02-20",
     location: "Sala",
+    origin: "Ilhas Salomão (Oceania)",
+    companionPlants: ["Filodendro", "Costela-de-adão", "Singônio"],
     tags: ["fácil", "pouca luz", "iniciante"],
     description: "Trepadeira versátil que purifica o ar. Cresce em quase qualquer condição de luz, perfeita para interiores.",
-    careInfo: { waterFrequency: "A cada 5-7 dias", sunlight: "luz indireta", humidity: "média", temperature: "18-30°C", difficulty: "fácil", soilType: "Universal, bem drenado", toxicity: "Tóxica para pets e crianças" },
-    lastWatered: "2024-12-18",
-    lastFertilized: "2024-12-05",
-    nextWatering: "2024-12-23",
-    nextFertilizing: "2024-12-19",
+    careInfo: {
+      waterFrequency: "A cada 5-7 dias", waterAmount: "150-200ml", sunlight: "luz indireta", sunHoursPerDay: "2-4h indireta",
+      humidity: "média", temperature: "18-30°C", idealSeason: "Primavera e Verão", climate: "Tropical",
+      difficulty: "fácil", soilType: "Universal, bem drenado",
+      fertilizerType: "NPK 10-10-10 líquido", fertilizerFrequency: "Mensal na primavera/verão",
+      pruningTips: "Cortar ramos longos para controlar tamanho. Propagar as estacas!",
+      propagation: "Estacas em água (fácil e rápido)",
+      toxicity: { dogs: true, cats: true, birds: true, children: true, symptoms: "Irritação oral, salivação excessiva, vômito. Cristais de oxalato de cálcio.", severity: "moderadamente tóxica" },
+    },
+    lastWatered: "2024-12-18", lastFertilized: "2024-12-05", nextWatering: "2024-12-23", nextFertilizing: "2024-12-19",
   },
 ];
 
