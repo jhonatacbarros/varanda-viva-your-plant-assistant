@@ -1,10 +1,12 @@
-import { ArrowLeft, Moon, Sun, Bell, Shield, HelpCircle, LogOut, ChevronRight, Leaf, Info } from "lucide-react";
+import { ArrowLeft, Moon, Sun, Bell, Shield, HelpCircle, LogOut, ChevronRight, Leaf, Info, Crown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/hooks/useTheme";
+import { usePremium } from "@/hooks/usePremium";
 
 const Settings = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const { isPremium } = usePremium();
 
   const sections = [
     {
@@ -45,6 +47,23 @@ const Settings = () => {
         </button>
         <h1 className="text-lg font-extrabold text-foreground">Configurações</h1>
       </div>
+
+      {/* Premium Banner */}
+      <button
+        onClick={() => navigate("/premium")}
+        className={`w-full rounded-2xl p-4 flex items-center gap-3 mb-5 animate-slide-up opacity-0 stagger-1 ${
+          isPremium ? "bg-gradient-to-r from-warning/20 to-primary/20 border border-warning/20" : "bg-gradient-to-r from-warning/15 to-accent/15"
+        }`}
+      >
+        <div className="w-10 h-10 rounded-xl bg-warning/20 flex items-center justify-center">
+          <Crown size={20} className="text-warning" />
+        </div>
+        <div className="flex-1 text-left">
+          <p className="text-sm font-extrabold text-foreground">{isPremium ? "Você é Premium! 👑" : "Varanda Viva Premium"}</p>
+          <p className="text-[10px] text-muted-foreground font-semibold">{isPremium ? "Gerencie sua assinatura" : "Desbloqueie IA, diagnósticos e mais"}</p>
+        </div>
+        <ChevronRight size={16} className="text-muted-foreground" />
+      </button>
 
       {/* Sections */}
       <div className="space-y-5">

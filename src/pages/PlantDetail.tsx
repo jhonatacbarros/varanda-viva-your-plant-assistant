@@ -1,11 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Droplets, Sun, Scissors, FlaskConical, Sprout, Repeat2, CloudDrizzle, MapPin, Leaf, Clock, AlertTriangle, ChevronDown, ChevronUp, Pencil, Globe, Thermometer, Cloud, Dog, Cat, Bird, Baby, ShieldAlert, Sparkles, GitFork } from "lucide-react";
+import { ArrowLeft, Droplets, Sun, Scissors, FlaskConical, Sprout, Repeat2, CloudDrizzle, MapPin, Leaf, Clock, AlertTriangle, ChevronDown, ChevronUp, Pencil, Globe, Thermometer, Cloud, Dog, Cat, Bird, Baby, ShieldAlert, Sparkles, GitFork, Crown, Camera, Brain, FlowerIcon } from "lucide-react";
 import { MOCK_PLANTS, MOCK_TASKS, MOCK_CARE_LOGS, TASK_ICONS, TASK_LABELS } from "@/data/plants";
 import { useState } from "react";
 import CareActionSheet from "@/components/CareActionSheet";
 import type { CareActionData } from "@/components/CareActionSheet";
 import EditPlantSheet from "@/components/EditPlantSheet";
 import type { EditPlantData } from "@/components/EditPlantSheet";
+import { usePremium } from "@/hooks/usePremium";
 
 type ActionType = "water" | "sun" | "prune" | "fertilize" | "harvest" | "repot" | "spray";
 
@@ -42,6 +43,7 @@ const toxicitySeverityColors: Record<string, string> = {
 const PlantDetail = () => {
   const { plantId } = useParams();
   const navigate = useNavigate();
+  const { isPremium } = usePremium();
   const [completedActions, setCompletedActions] = useState<string[]>([]);
   const [showAllHistory, setShowAllHistory] = useState(false);
   const [showCareDetails, setShowCareDetails] = useState(false);
@@ -455,6 +457,40 @@ const PlantDetail = () => {
             </div>
           )}
         </button>
+      </div>
+
+      {/* Premium AI Features */}
+      <div className="px-4 mt-4">
+        <div className={`rounded-2xl p-4 ${isPremium ? "bg-gradient-to-r from-warning/10 to-primary/10 border border-warning/20" : "bg-card card-shadow"}`}>
+          <div className="flex items-center gap-2 mb-3">
+            <Crown size={16} className="text-warning" />
+            <h3 className="text-sm font-extrabold text-foreground">Recursos Premium</h3>
+            {!isPremium && <span className="text-[9px] font-bold bg-warning/15 text-warning px-2 py-0.5 rounded-full ml-auto">PRO</span>}
+          </div>
+          <div className="grid grid-cols-3 gap-2">
+            <button
+              onClick={() => navigate(isPremium ? `/premium/diagnosis?plant=${plant.id}` : "/premium")}
+              className="flex flex-col items-center gap-1.5 py-3 px-1 rounded-xl bg-card/60 card-shadow"
+            >
+              <Camera size={18} className="text-primary" />
+              <span className="text-[9px] font-bold text-foreground text-center">Diagnóstico IA</span>
+            </button>
+            <button
+              onClick={() => navigate(isPremium ? `/premium/ai-care?plant=${plant.id}` : "/premium")}
+              className="flex flex-col items-center gap-1.5 py-3 px-1 rounded-xl bg-card/60 card-shadow"
+            >
+              <Brain size={18} className="text-primary" />
+              <span className="text-[9px] font-bold text-foreground text-center">Estratégias</span>
+            </button>
+            <button
+              onClick={() => navigate(isPremium ? `/premium/pots?plant=${plant.id}` : "/premium")}
+              className="flex flex-col items-center gap-1.5 py-3 px-1 rounded-xl bg-card/60 card-shadow"
+            >
+              <FlowerIcon size={18} className="text-primary" />
+              <span className="text-[9px] font-bold text-foreground text-center">Vasos Ideais</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Recent history */}

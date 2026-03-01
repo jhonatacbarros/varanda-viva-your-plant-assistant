@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Flame, Target, Leaf, Settings, Sprout, Bookmark, Grid3X3, Trophy, ChevronRight } from "lucide-react";
+import { Flame, Target, Leaf, Settings, Sprout, Bookmark, Grid3X3, Trophy, ChevronRight, Crown } from "lucide-react";
 import { MOCK_PLANTS, MOCK_FEED_POSTS } from "@/data/plants";
 import { useNavigate } from "react-router-dom";
 import { useGamification, LEVELS } from "@/hooks/useGamification";
+import { usePremium } from "@/hooks/usePremium";
 
 type Tab = "posts" | "saved" | "badges";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>("posts");
+  const { isPremium } = usePremium();
   const {
     cultivarPoints,
     currentLevel,
@@ -55,10 +57,13 @@ const Profile = () => {
           </p>
         </div>
         <button
-          onClick={() => navigate("/login")}
-          className="px-3 py-2 bg-primary rounded-xl text-xs font-bold text-primary-foreground"
+          onClick={() => navigate("/premium")}
+          className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 ${
+            isPremium ? "bg-gradient-to-r from-warning to-primary text-primary-foreground" : "bg-warning/15 text-warning"
+          }`}
         >
-          Login
+          <Crown size={14} />
+          {isPremium ? "Premium" : "Upgrade"}
         </button>
       </div>
 

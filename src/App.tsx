@@ -16,6 +16,13 @@ import CreatePost from "./pages/CreatePost";
 import AddPlant from "./pages/AddPlant";
 import Login from "./pages/Login";
 import Settings from "./pages/Settings";
+import PremiumUpgrade from "./pages/PremiumUpgrade";
+import PremiumDiagnosis from "./pages/PremiumDiagnosis";
+import PremiumAICare from "./pages/PremiumAICare";
+import PremiumPots from "./pages/PremiumPots";
+import PremiumShare from "./pages/PremiumShare";
+import PremiumPests from "./pages/PremiumPests";
+import PremiumWeather from "./pages/PremiumWeather";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +45,13 @@ const App = () => (
           <Route path="/calendar" element={<AppLayout><Calendar /></AppLayout>} />
           <Route path="/profile" element={<AppLayout><Profile /></AppLayout>} />
           <Route path="/settings" element={<AppLayout><Settings /></AppLayout>} />
+          <Route path="/premium" element={<AppLayout><PremiumUpgrade /></AppLayout>} />
+          <Route path="/premium/diagnosis" element={<AppLayout><PremiumDiagnosis /></AppLayout>} />
+          <Route path="/premium/ai-care" element={<AppLayout><PremiumAICare /></AppLayout>} />
+          <Route path="/premium/pots" element={<AppLayout><PremiumPots /></AppLayout>} />
+          <Route path="/premium/share" element={<AppLayout><PremiumShare /></AppLayout>} />
+          <Route path="/premium/pests" element={<AppLayout><PremiumPests /></AppLayout>} />
+          <Route path="/premium/weather" element={<AppLayout><PremiumWeather /></AppLayout>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
