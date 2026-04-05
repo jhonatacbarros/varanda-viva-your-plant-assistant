@@ -1,11 +1,10 @@
-import { Leaf, Home, CalendarDays, User, Users } from "lucide-react";
+import { Leaf, Home, User, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const tabs = [
-  { path: "/assistant", label: "Assistente", icon: Home },
+  { path: "/home", label: "Início", icon: Home },
   { path: "/garden", label: "Meu Jardim", icon: Leaf },
   { path: "/feed", label: "Comunidade", icon: Users },
-  { path: "/calendar", label: "Calendário", icon: CalendarDays },
   { path: "/profile", label: "Perfil", icon: User },
 ];
 
@@ -13,7 +12,6 @@ const BottomNav = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Hide on onboarding
   if (location.pathname === "/onboarding") return null;
 
   return (
@@ -21,7 +19,7 @@ const BottomNav = () => {
       <div className="flex items-center justify-around max-w-lg mx-auto h-16 px-2">
         {tabs.map((tab) => {
           const isActive = location.pathname === tab.path || 
-            (tab.path === "/assistant" && location.pathname === "/");
+            (tab.path === "/home" && location.pathname === "/");
           const Icon = tab.icon;
           return (
             <button
@@ -41,7 +39,6 @@ const BottomNav = () => {
           );
         })}
       </div>
-      {/* Safe area for mobile */}
       <div className="h-safe-area-inset-bottom" />
     </nav>
   );
