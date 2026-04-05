@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { ArrowLeft, Sprout, Grid3X3, UserPlus, UserCheck, MessageCircle, Leaf } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { MOCK_USERS, MOCK_FEED_POSTS } from "@/data/plants";
+import { MOCK_USERS } from "@/data/users";
+import { MOCK_FEED_POSTS } from "@/data/plants";
 
 const UserProfile = () => {
   const navigate = useNavigate();
