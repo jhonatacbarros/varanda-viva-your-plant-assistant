@@ -118,6 +118,7 @@ export interface CareLog {
 
 export interface FeedPost {
   id: string;
+  userId: string;
   userName: string;
   userAvatar: string;
   plantName: string;
@@ -720,9 +721,12 @@ export const MOCK_CARE_LOGS: CareLog[] = [
   { id: "cl15", plantId: "6", plantName: "Jibóia", type: "prune", action: "Podou", note: "Cortou ramo para propagar", date: "2024-12-12", time: "14:00" },
 ];
 
+export { MOCK_USERS } from "./users";
+
 export const MOCK_FEED_POSTS: FeedPost[] = [
   {
     id: "f1",
+    userId: "u1",
     userName: "Ana Paula",
     userAvatar: "👩‍🌾",
     plantName: "Monstera Deliciosa",
@@ -739,6 +743,7 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
   },
   {
     id: "f2",
+    userId: "u2",
     userName: "Pedro Santos",
     userAvatar: "🧑‍🌾",
     plantName: "Tomate Cereja",
@@ -756,6 +761,7 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
   },
   {
     id: "f3",
+    userId: "u3",
     userName: "Camila Rocha",
     userAvatar: "👩",
     plantName: "Orquídea Phalaenopsis",
@@ -771,6 +777,7 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
   },
   {
     id: "f4",
+    userId: "u4",
     userName: "Lucas Mendes",
     userAvatar: "🧔",
     plantName: "Samambaia",
@@ -787,6 +794,7 @@ export const MOCK_FEED_POSTS: FeedPost[] = [
   },
   {
     id: "f5",
+    userId: "u5",
     userName: "Fernanda Lima",
     userAvatar: "👩‍🦰",
     plantName: "Suculentas",
