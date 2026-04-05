@@ -51,15 +51,18 @@ const Feed = () => {
           >
             {/* Post header */}
             <div className="flex items-center gap-3 p-4 pb-2">
-              <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-xl">
+              <button
+                onClick={() => navigate(`/user/${post.userId}`)}
+                className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-xl"
+              >
                 {post.userAvatar}
-              </div>
-              <div className="flex-1">
+              </button>
+              <button onClick={() => navigate(`/user/${post.userId}`)} className="flex-1 text-left">
                 <p className="text-sm font-bold text-foreground">{post.userName}</p>
                 <p className="text-[10px] text-muted-foreground font-semibold">
                   {post.plantEmoji} {post.plantName} · {post.timeAgo}
                 </p>
-              </div>
+              </button>
               <button className="text-muted-foreground hover:text-foreground transition-colors">
                 <Bookmark size={18} />
               </button>
