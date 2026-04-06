@@ -48,6 +48,12 @@ const Onboarding = () => {
     }
   };
 
+  const handleFinish = () => {
+    localStorage.setItem("vv_onboarded", "true");
+    localStorage.setItem("vv_preferences", JSON.stringify(selectedOptions));
+    navigate("/home");
+  };
+
   const isLastStep = step >= FLOW.length - 1 && messages[messages.length - 1]?.from === "bot";
   const currentOptions = messages.filter((m) => m.options).pop()?.options;
   const showOptions = !isLastStep && currentOptions && messages[messages.length - 1]?.options;
@@ -98,7 +104,7 @@ const Onboarding = () => {
           </div>
         ) : isLastStep ? (
           <button
-            onClick={() => navigate("/assistant")}
+            onClick={handleFinish}
             className="w-full bg-primary text-primary-foreground rounded-xl py-4 text-base font-extrabold hover:opacity-90 transition-opacity animate-bounce-in"
           >
             Começar a cuidar! 🌿
